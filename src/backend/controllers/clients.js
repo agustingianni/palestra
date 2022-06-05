@@ -47,7 +47,10 @@ const updateClient = asyncHandler(async (req, res) => {
     const updatedClient = await Client.findByIdAndUpdate(
         req.params.id,
         req.body,
-        { new: true }
+        {
+            new: true,
+            runValidators: true
+        }
     )
 
     res.status(200).json(updatedClient)
