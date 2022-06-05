@@ -1,0 +1,5 @@
+# Palestra
+
+## Dependencies
+
+Docker

@@ -1,0 +1,28 @@
+GET http://localhost:8000/api/clients HTTP/1.1
+###
+
+POST http://localhost:8000/api/clients HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": 1,
+    "lastname": 2,
+    "start_date": 3,
+    "type": "regular",
+    "subscription": 6
+}
+###
+
+PUT http://localhost:8000/api/clients/4444 HTTP/1.1
+Content-Type: application/json
+
+{    
+}
+###
+
+DELETE http://localhost:8000/api/clients/4444 HTTP/1.1
+Content-Type: application/json
+
+{    
+}
+###
