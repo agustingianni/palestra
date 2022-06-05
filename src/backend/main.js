@@ -3,7 +3,6 @@ const { ErrorMiddleWare } = require("./middleware/error")
 
 const express = require("express")
 const colors = require("colors")
-const path = require("path")
 
 const Database = require("./database")
 
@@ -19,8 +18,7 @@ async function main() {
     app.use('/api/clients', require('./routes/clients'))
 
     // Expose frontend static contents.
-    const frontend_path = path.join(__dirname, '../frontend')
-    app.use(express.static(frontend_path))
+    app.use(express.static(Application.frontend.path))
 
     // Use a middleware to handle errors in a consistent way.
     app.use(ErrorMiddleWare)
@@ -28,12 +26,12 @@ async function main() {
     // TODO(goose): Check if this makes sense.
     app.get('*', (req, res) =>
         res.sendFile(
-            path.resolve(frontend_path, 'index.html')
+            path.resolve(Application.frontend.path, 'index.html')
         )
     )
 
-    app.listen(Application.port, () => {
-        console.log(`Server started on port http://localhost:${Application.port}"`)
+    app.listen(Application.backend.port, () => {
+        console.log(`Server started on port http://localhost:${Application.backend.port}"`)
     })
 
 }

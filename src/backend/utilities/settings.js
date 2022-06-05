@@ -1,9 +1,15 @@
 require("dotenv").config()
+const path = require("path")
 
 const Application = {
     development: process.env.NODE_ENV === "development",
     release: process.env.NODE_ENV === "release",
-    port: process.env.APP_PORT,
+    backend: {
+        port: process.env.APP_PORT,
+    },
+    frontend: {
+        path: path.join(__dirname, '../frontend')
+    }
 }
 
 const Database = {
