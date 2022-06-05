@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const { Database } = require("./utilities/settings")
 
 module.exports = {
     connect: async () => {
-        const connect_string = process.env.DATABASE_CONNECTION_STRING
+        const connect_string = Database.uri
 
         console.log(`Connecting to database at ${connect_string}`)
 

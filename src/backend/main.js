@@ -1,10 +1,9 @@
-// Load environment variables.
-require("dotenv").config()
+const { Application } = require("./utilities/settings")
+const { ErrorMiddleWare } = require("./middleware/error")
 
 const express = require("express")
 const colors = require("colors")
 const path = require("path")
-const APP_PORT = process.env.APP_PORT
 
 const Database = require("./database")
 
@@ -23,14 +22,18 @@ async function main() {
     const frontend_path = path.join(__dirname, '../frontend')
     app.use(express.static(frontend_path))
 
+    // Use a middleware to handle errors in a consistent way.
+    app.use(ErrorMiddleWare)
+
+    // TODO(goose): Check if this makes sense.
     app.get('*', (req, res) =>
         res.sendFile(
             path.resolve(frontend_path, 'index.html')
         )
     )
 
-    app.listen(APP_PORT, () => {
-        console.log(`Server started on port http://localhost:${APP_PORT}"`)
+    app.listen(Application.port, () => {
+        console.log(`Server started on port http://localhost:${Application.port}"`)
     })
 
 }
