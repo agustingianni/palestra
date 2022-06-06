@@ -8,7 +8,7 @@ const Application = {
         port: process.env.APP_PORT,
     },
     frontend: {
-        path: path.join(__dirname, '../frontend')
+        path: path.join(__dirname, '..', '..', '..', 'frontend')
     }
 }
 

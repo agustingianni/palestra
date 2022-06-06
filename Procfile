@@ -1,1 +1,1 @@
-backend-server: npm run server
+backend-server: npm --prefix backend run server
