@@ -11,12 +11,12 @@ const getClients = asyncHandler(async (req, res) => {
     res.status(200).json(clients)
 })
 
-// @desc    Set client
+// @desc    Create client
 // @route   POST /api/clients
 // @access  Private
 // @returns 201 Created
 // @returns 400 Bad Request
-const setClient = asyncHandler(async (req, res) => {
+const createClient = asyncHandler(async (req, res) => {
     try {
         const client = new Client({
             name: req.body.name,
@@ -73,7 +73,7 @@ const deleteClient = asyncHandler(async (req, res) => {
 
 module.exports = {
     getClients,
-    setClient,
+    createClient,
     updateClient,
     deleteClient,
 }

@@ -5,7 +5,7 @@ const Clients = require('../controllers/clients')
 
 router.route('/')
     .get(Clients.getClients)
-    .post(Clients.setClient)
+    .post(Clients.createClient)
 
 router.route('/:id')
     .delete(Clients.deleteClient)
