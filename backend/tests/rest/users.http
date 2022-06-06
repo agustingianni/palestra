@@ -1,0 +1,17 @@
+POST http://localhost:8000/api/users/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "admin22",
+    "password": "pepe"
+}
+###
+
+POST http://localhost:8000/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "admin22",
+    "password": "pepe"
+}
+###

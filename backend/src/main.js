@@ -17,6 +17,7 @@ async function main() {
 
     // Expose backend routes.
     app.use('/api/clients', require('./routes/clients'))
+    app.use('/api/users', require('./routes/users'))
 
     // Expose frontend static contents.
     app.use(express.static(Application.frontend.path))

@@ -16,7 +16,12 @@ const Database = {
     uri: process.env.DATABASE_CONNECTION_STRING
 }
 
+const WebToken = {
+    secret: process.env.JWT_SECRET
+}
+
 module.exports = {
     Application,
-    Database
+    Database,
+    WebToken
 }
