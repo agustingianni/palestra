@@ -56,7 +56,6 @@ function Login() {
                 {mutation.isError && <p>Error logging in.</p>}
                 {mutation.isLoading && <p>Logging in ...</p>}
                 {mutation.isSuccess && <Navigate to="/" />}
-
             </section>
         </div>
     )
