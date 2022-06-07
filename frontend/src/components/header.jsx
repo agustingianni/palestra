@@ -1,24 +1,22 @@
 import { FaSignInAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
+import AuthService from '../service/auth'
+
 function Header() {
-    // TODO(goose):
-    //   - If logged in, show the user.
-    //   - If logged out, show login link
-    // This means we need user information from somewhere.
     return (
         <header className='header'>
             <div className='logo'>
                 <Link to='/'>Gym Management</Link>
             </div>
             <ul>
-                <>
-                    <li>
-                        <Link to='/login'>
-                            <FaSignInAlt /> Login
-                        </Link>
-                    </li>
-                </>
+                <li>
+                    {
+                        AuthService.authenticated() ?
+                            <Link to='/logout'><FaSignInAlt /> Logout</Link> :
+                            <Link to='/login'><FaSignInAlt /> Login</Link>
+                    }
+                </li>
             </ul>
         </header>
     )

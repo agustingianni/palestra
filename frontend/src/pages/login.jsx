@@ -1,6 +1,7 @@
 import React from "react"
 import AuthService from "../service/auth"
-import { toast } from "react-toastify"
+import { useMutation } from "react-query"
+import { Navigate } from "react-router";
 
 
 function Login() {
@@ -9,6 +10,10 @@ function Login() {
         password: '',
     })
 
+    const mutation = useMutation((userData) =>
+        AuthService.login(userData)
+    )
+
     function handleChange(event) {
         setState((prevState) => ({
             ...prevState,
@@ -16,27 +21,13 @@ function Login() {
         }))
     }
 
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault()
-
-        if (!state.username) {
-            toast.error("Missing username")
-            return
-        }
-
-        if (!state.password) {
-            toast.error("Missing password")
-            return
-        }
-
-        try {
-            await AuthService.login(state)
-        } catch (error) {
-            console.log(error)
-        }
-
-        toast.info("logged in")
+        mutation.mutate(state)
     }
+
+    if (AuthService.authenticated())
+        return <Navigate to="/" />
 
     return (
         <div>
@@ -59,6 +50,12 @@ function Login() {
                         <button type='submit' className='btn btn-block'>Submit</button>
                     </div>
                 </form>
+            </section>
+            <section>
+                {mutation.isError && <p>Error logging in.</p>}
+                {mutation.isLoading && <p>Logging in ...</p>}
+                {mutation.isSuccess && <Navigate to="/" />}
+
             </section>
         </div>
     )

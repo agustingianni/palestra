@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import './index.css'
@@ -29,7 +28,6 @@ root.render(
                     <Footer />
                 </div>
             </Router>
-            <ToastContainer position="top-center" />
         </QueryClientProvider>
     </React.StrictMode>
 )
