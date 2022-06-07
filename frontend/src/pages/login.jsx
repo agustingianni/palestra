@@ -1,7 +1,8 @@
 import React from "react"
-import AuthService from "../service/auth"
-import { useMutation } from "react-query"
 import { Navigate } from "react-router";
+import { useMutation } from "react-query"
+
+import AuthService from "../service/auth"
 
 
 function Login() {
