@@ -1,73 +1,69 @@
-import React from "react"
 import { Navigate } from "react-router";
-import { useMutation } from "react-query"
-import { TbAlertCircle } from "react-icons/tb";
-import { Container, LoadingOverlay, Stack, Notification, TextInput, PasswordInput, Button, Divider } from '@mantine/core';
-import { useForm } from '@mantine/form'
+import { useForm } from "react-hook-form";
+import { Flex, Input, Button, Heading, VStack } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import AuthService from "../service/auth"
 
+// Use `yup` to validate the form.
+const loginFormResolver = yupResolver(yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required()
+}))
+
+function onSubmit({ username, password }) {
+    return AuthService.login({
+        username,
+        password
+    })
+}
+
 function Login() {
-    const form = useForm({
-        initialValues: {
-            username: '',
-            password: ''
+    const { register, handleSubmit, formState: { isValid, isSubmitting, isSubmitSuccessful } } = useForm(
+        {
+            mode: "onChange",
+            resolver: loginFormResolver
         }
-    });
+    );
 
-    const mutation = useMutation((userData) =>
-        AuthService.login(userData)
-    )
-
-    function handleSubmit({ username, password }) {
-        mutation.mutate({
-            username,
-            password
-        })
-    }
-
-    if (mutation.isSuccess)
+    if (isSubmitSuccessful)
         return <Navigate to="/" />
 
     return (
-        <Container className="form-login-container">
-            <div style={{ position: 'relative' }}>
-                <h1>Login</h1>
-                <Divider my="md" />
-                <LoadingOverlay visible={mutation.isLoading} />
-                <form onSubmit={form.onSubmit(handleSubmit)}>
-                    <Stack>
-                        <TextInput
-                            required
+        <Flex height="100vh" alignItems="center" justifyContent="center" background="gray.100">
+            <VStack align='stretch' p="12" rounded="6" boxShadow='xl' background="white">
+                <Heading mb="3">Login</Heading>
+
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <VStack align='stretch'>
+                        <Input
+                            id='username'
                             placeholder="User"
-                            {...form.getInputProps('username')}
+                            {...register("username")}
                         />
-                        <PasswordInput
-                            required
+
+                        <Input
+                            id='password'
+                            type='password'
                             placeholder="Password"
-                            {...form.getInputProps('password')}
+                            {...register("password")}
                         />
+
                         <Button
-                            type="submit">
+                            isDisabled={!isValid}
+                            isLoading={isSubmitting}
+                            type="submit"
+                        >
                             Login
                         </Button>
 
-                        {
-                            mutation.isError &&
-                            <Notification
-                                title="Login error"
-                                icon={<TbAlertCircle />}
-                                color="red"
-                                disallowClose
-                            >
-                                Invalid credentials, please retry
-                            </Notification>
-                        }
-                    </Stack>
+                    </VStack>
                 </form>
-            </div>
-        </Container>
+            </VStack>
+        </Flex>
     )
 }
+
 
 export default Login
