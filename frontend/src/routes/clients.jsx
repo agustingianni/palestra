@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, HStack, Input, Button, ButtonGroup } from '@chakra-ui/react';
+import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, Input, Button } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi'
 import ClientTable from '../components/ClientTable'
 import MainContainer from '../components/MainContainer'
