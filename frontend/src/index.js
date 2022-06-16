@@ -1,31 +1,37 @@
-import React from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "react-query";
-
 import { ChakraProvider } from '@chakra-ui/react'
 
+import AppRoutes from './routes'
 import './index.css'
-import Login from './pages/login'
-import Logout from './pages/logout'
-import DashBoard from './pages/dashboard'
 
-const queryClient = new QueryClient();
+const routes =
+    <Router>
+        <Routes>
+            {
+                AppRoutes.map((route) =>
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        element={route.element}
+                    />
+                )
+            }
+        </Routes>
+    </Router>
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
+const queryClient = new QueryClient();
+
 root.render(
-    <React.StrictMode>
+    <StrictMode>
         <QueryClientProvider client={queryClient}>
             <ChakraProvider>
-                <Router>
-                    <Routes>
-                        <Route path="/" element={<DashBoard />}></Route>
-                        <Route path="/login" element={<Login />}></Route>
-                        <Route path="/logout" element={<Logout />}></Route>
-                    </Routes>
-                </Router>
+                {routes}
             </ChakraProvider>
         </QueryClientProvider>
-    </React.StrictMode>
+    </StrictMode>
 )

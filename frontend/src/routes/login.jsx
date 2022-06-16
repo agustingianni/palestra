@@ -19,7 +19,7 @@ function onSubmit({ username, password }) {
     })
 }
 
-function Login() {
+function LoginPage() {
     const { register, handleSubmit, formState: { isValid, isSubmitting, isSubmitSuccessful } } = useForm(
         {
             mode: "onChange",
@@ -27,8 +27,9 @@ function Login() {
         }
     );
 
-    if (isSubmitSuccessful)
+    if (isSubmitSuccessful) {
         return <Navigate to="/" />
+    }
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center" background="gray.100">
@@ -66,4 +67,4 @@ function Login() {
 }
 
 
-export default Login
+export default LoginPage
