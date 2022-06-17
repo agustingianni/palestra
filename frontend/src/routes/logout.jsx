@@ -1,9 +1,10 @@
 import { Navigate } from "react-router";
-
-import AuthService from "../service/auth"
+import { useAuth } from "../hooks/auth"
 
 function LogoutPage() {
-    AuthService.logout()
+    const auth = useAuth()
+
+    auth.signout()
 
     return <Navigate to="/login" />
 }

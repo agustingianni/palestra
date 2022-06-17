@@ -4,7 +4,7 @@ import { Flex, Input, Button, Heading, VStack } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import AuthService from "../service/auth"
+import { useAuth, useUser } from "../hooks/auth"
 
 // Use `yup` to validate the form.
 const loginFormResolver = yupResolver(yup.object().shape({
@@ -12,29 +12,29 @@ const loginFormResolver = yupResolver(yup.object().shape({
     password: yup.string().required()
 }))
 
-function onSubmit({ username, password }) {
-    return AuthService.login({
-        username,
-        password
-    })
-}
-
 function LoginPage() {
-    const { register, handleSubmit, formState: { isValid, isSubmitting, isSubmitSuccessful } } = useForm(
+    const { signin } = useAuth()
+    const { user } = useUser()
+
+    function onSubmit({ username, password }) {
+        return signin(username, password)
+    }
+
+    const { register, handleSubmit, formState: { isValid, isSubmitting } } = useForm(
         {
             mode: "onChange",
             resolver: loginFormResolver
         }
     );
 
-    if (isSubmitSuccessful) {
+    if (user)
         return <Navigate to="/" />
-    }
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center" background="gray.100">
             <VStack align='stretch' p="12" rounded="6" boxShadow='xl' background="white">
                 <Heading mb="3">Login</Heading>
+                <Heading>{user?._id}</Heading>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <VStack align='stretch'>
