@@ -1,42 +1,60 @@
-import { Navigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { HStack, Select, Textarea, Input, Button, VStack } from '@chakra-ui/react'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver as resolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { format } from 'date-fns'
+import { useClientMutation } from "../hooks/clients";
 
-const loginFormResolver = yupResolver(yup.object().shape({
-    username: yup.string().required(),
-    password: yup.string().required()
+// TODO(goose): Validate `start_date`.
+const formResolver = resolver(yup.object().shape({
+    name: yup.string().required(),
+    lastname: yup.string().required(),
+    type: yup.string().required(),
+    start_date: yup.string().required(),
+    subscription: yup.string().required(),
+    notes: yup.string()
 }))
-
-function onSubmit({ username, password }) {
-    // TODO(goose): Implement
-}
 
 function capitalize(value) {
     return value.trim().replace(/^\w/, (c) => c.toUpperCase())
 }
 
 function ClientCreateForm() {
-    const { register, handleSubmit, formState: { isValid, isSubmitting, isSubmitSuccessful } } = useForm(
-        {
-            mode: "onChange",
-            resolver: loginFormResolver
-        }
-    );
+    const { mutate: addClient, isLoading } = useClientMutation()
 
-    if (isSubmitSuccessful)
-        return <Navigate to="/" />
+    const { setError, register, handleSubmit, formState: { isValid } } = useForm({
+        mode: "onChange",
+        resolver: formResolver
+    });
+
+    const onSubmit = async (data) => {
+        try {
+            addClient(data)
+        } catch (error) {
+            console.log(error)
+            setError("form", { message: "Invalid" })
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack align='stretch'>
-                <Input id='first_name' placeholder="First name" {...register("first_name")} />
+                <Input
+                    id='name'
+                    placeholder="First name"
+                    {...register("name")}
+                />
 
-                <Input id='last_name' placeholder="Last name" {...register("last_name")} />
+                <Input
+                    id='lastname'
+                    placeholder="Last name"
+                    {...register("lastname")}
+                />
 
-                <Select id='type' {...register("type")}>
+                <Select
+                    id='type'
+                    {...register("type")}
+                >
                     {
                         ["regular", "athlete", "university", "management"].map(type =>
                             <option value={type} key={type}>{capitalize(type)}</option>
@@ -45,9 +63,17 @@ function ClientCreateForm() {
                 </Select>
 
                 <HStack>
-                    <Input id='start_date' {...register("start_date")} value={format(new Date(), 'dd/MM/yyyy')} />
+                    <Input
+                        id='start_date'
+                        value={format(new Date(), 'dd/MM/yyyy')}
+                        {...register("start_date")}
+                    />
 
-                    <Select id='subscription' {...register("subscription")} w="25%">
+                    <Select
+                        id='subscription'
+                        {...register("subscription")}
+                        w="25%"
+                    >
                         {
                             ["1", "3", "6", "12"].map(subscription =>
                                 <option value={subscription} key={subscription}>{subscription}</option>
@@ -56,12 +82,19 @@ function ClientCreateForm() {
                     </Select>
                 </HStack>
 
-                <Textarea id='notes' placeholder="Notes" {...register("notes")} />
+                <Textarea
+                    id='notes'
+                    placeholder="Notes"
+                    {...register("notes")}
+                />
 
-                <Button isDisabled={!isValid} isLoading={isSubmitting} type="submit">
+                <Button
+                    isDisabled={!isValid}
+                    isLoading={isLoading}
+                    type="submit"
+                >
                     Add
                 </Button>
-
             </VStack>
         </form>
     )

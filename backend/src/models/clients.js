@@ -19,7 +19,7 @@ const ClientSchema = new Schema(
         },
 
         start_date: {
-            type: Date,
+            type: String,
             required: true,
         },
 

@@ -16,7 +16,7 @@ function ClientCreateModal() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen}>Open Create Modal</Button>
 
             <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />

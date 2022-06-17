@@ -2,10 +2,10 @@ import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertT
 import { FiSearch } from 'react-icons/fi'
 import ClientTable from '../components/ClientTable'
 import MainContainer from '../components/MainContainer'
-import useClients from '../hooks/clients'
+import { useClientQuery } from '../hooks/clients'
 
 function ClientsPage() {
-    const { isLoading, isError, data, error } = useClients()
+    const { isLoading, isError, data, error } = useClientQuery()
 
     if (isLoading) {
         const contents = (

@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { useAuth, useUser } from "../hooks/auth"
 
 // Use `yup` to validate the form.
-const loginFormResolver = resolver(yup.object().shape({
+const formResolver = resolver(yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required()
 }))
@@ -16,12 +16,10 @@ function LoginPage() {
     const { signin } = useAuth()
     const { user } = useUser()
 
-    const { setError, register, handleSubmit, formState: { isValid, isSubmitting, errors } } = useForm(
-        {
-            mode: "onChange",
-            resolver: loginFormResolver
-        }
-    );
+    const { setError, register, handleSubmit, formState: { isValid, isSubmitting, errors } } = useForm({
+        mode: "onChange",
+        resolver: formResolver
+    });
 
     const onSubmit = async ({ username, password }) => {
         try {
