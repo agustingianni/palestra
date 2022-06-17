@@ -67,7 +67,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // @desc    Return user details
 // @route   GET /api/users/info
-// @access  PRivate
+// @access  Private
 // @returns 200 Ok
 // @returns 400 Bad Request
 const infoUser = asyncHandler(async (req, res) => {
