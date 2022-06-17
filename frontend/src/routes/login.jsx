@@ -1,13 +1,13 @@
 import { Navigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { Flex, Input, Button, Heading, VStack } from '@chakra-ui/react'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert, AlertIcon, AlertTitle, Flex, Input, Button, Heading, VStack } from '@chakra-ui/react'
+import { yupResolver as resolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { useAuth, useUser } from "../hooks/auth"
 
 // Use `yup` to validate the form.
-const loginFormResolver = yupResolver(yup.object().shape({
+const loginFormResolver = resolver(yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required()
 }))
@@ -16,16 +16,20 @@ function LoginPage() {
     const { signin } = useAuth()
     const { user } = useUser()
 
-    function onSubmit({ username, password }) {
-        return signin(username, password)
-    }
-
-    const { register, handleSubmit, formState: { isValid, isSubmitting } } = useForm(
+    const { setError, register, handleSubmit, formState: { isValid, isSubmitting, errors } } = useForm(
         {
             mode: "onChange",
             resolver: loginFormResolver
         }
     );
+
+    const onSubmit = async ({ username, password }) => {
+        try {
+            await signin(username, password)
+        } catch (error) {
+            setError("auth", { message: "Invalid credentials" })
+        }
+    }
 
     if (user)
         return <Navigate to="/" />
@@ -56,9 +60,16 @@ function LoginPage() {
                         >
                             Login
                         </Button>
-
                     </VStack>
                 </form>
+                {
+                    errors.auth &&
+                    <Alert status='error'>
+                        <AlertIcon />
+                        <AlertTitle>{errors.auth.message}</AlertTitle>
+                    </Alert>
+                }
+
             </VStack>
         </Flex>
     )
