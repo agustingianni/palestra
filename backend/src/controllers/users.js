@@ -59,11 +59,36 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     res.status(200).json({
+        _id: user._id,
+        name: user.name,
         token: WebToken.generate(user._id),
+    })
+})
+
+// @desc    Return user details
+// @route   GET /api/users/info
+// @access  PRivate
+// @returns 200 Ok
+// @returns 400 Bad Request
+const infoUser = asyncHandler(async (req, res) => {
+    console.log(req.params)
+
+    const { id } = req.params
+
+    const user = await User.findById(id)
+    if (!user) {
+        res.status(400)
+        throw new Error('Invalid id')
+    }
+
+    res.status(200).json({
+        _id: user._id,
+        name: user.username
     })
 })
 
 module.exports = {
     createUser,
     loginUser,
+    infoUser
 }
