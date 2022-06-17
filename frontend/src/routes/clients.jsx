@@ -1,14 +1,11 @@
-import { useQuery } from 'react-query';
 import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, Input, Button } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi'
 import ClientTable from '../components/ClientTable'
 import MainContainer from '../components/MainContainer'
-import ClientsService from '../service/clients'
+import useClients from '../hooks/clients'
 
 function ClientsPage() {
-    const { isLoading, isError, data, error } = useQuery('clients', () =>
-        ClientsService.list()
-    )
+    const { isLoading, isError, data, error } = useClients()
 
     if (isLoading) {
         const contents = (
