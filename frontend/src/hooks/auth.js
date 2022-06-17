@@ -64,7 +64,6 @@ export function useAuth() {
             password
         })
 
-        console.log("useAuth::signin", response.data)
         if (response.data)
             updateUser(response.data)
 

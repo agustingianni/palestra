@@ -34,8 +34,6 @@ function LoginPage() {
         <Flex height="100vh" alignItems="center" justifyContent="center" background="gray.100">
             <VStack align='stretch' p="12" rounded="6" boxShadow='xl' background="white">
                 <Heading mb="3">Login</Heading>
-                <Heading>{user?._id}</Heading>
-
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <VStack align='stretch'>
                         <Input
