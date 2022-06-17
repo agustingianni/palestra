@@ -9,10 +9,10 @@ function ClientsPage() {
 
     if (isLoading) {
         const contents = (
-            < Container >
+            <Container>
                 <Text>Loading clients ...</Text>
                 <Progress isIndeterminate />
-            </Container >
+            </Container>
         )
 
         return <MainContainer contents={contents} />

@@ -10,7 +10,7 @@ function MainContainer({ contents }) {
     return <Flex h='100vh' flexDir='row'>
         {/* Navigation column */}
         <Flex flexDir='column' w='25%' alignItems='center' backgroundColor='blackAlpha.100' justifyContent='space-between'>
-            <Flex flexDir='column' >
+            <Flex flexDir='column'>
                 {/* Application title */}
                 <Heading p='10' letterSpacing='tight'>
                     Management
