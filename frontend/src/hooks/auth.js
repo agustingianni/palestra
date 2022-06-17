@@ -31,8 +31,11 @@ export function useUser() {
     }
 
     // Requests user info in case things have changed server side.
-    async function details(data) {
-        const response = await axios.get(`/api/users/info/${data._id}`)
+    async function details(user) {
+        if (!user)
+            return null
+
+        const response = await axios.get(`/api/users/info/${user._id}`)
         if (response.data)
             updateUser(response.data)
 
