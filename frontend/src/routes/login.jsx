@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Alert, AlertIcon, AlertTitle, Flex, Input, Button, Heading, VStack } from '@chakra-ui/react'
 import { yupResolver as resolver } from '@hookform/resolvers/yup';
