@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, Input, Button } from '@chakra-ui/react';
 import { FiSearch } from 'react-icons/fi'
 import ClientTable from '../components/ClientTable'
@@ -5,8 +6,16 @@ import MainContainer from '../components/MainContainer'
 import { useClientQuery } from '../hooks/clients'
 
 function ClientsPage() {
-    const { isLoading, isError, data, error } = useClientQuery()
+    // Search query string.
+    const [query, setQuery] = useState('')
+    const onQueryStringChange = (event) => setQuery(event.target.value)
+    const my_filter = (client) => {
+        return client.name.toLowerCase().includes(query) ||
+            client.lastname.toLowerCase().includes(query)
+    }
 
+    // Client data.
+    const { isLoading, isError, data: clients, error } = useClientQuery()
     if (isLoading) {
         const contents = (
             <Container>
@@ -30,7 +39,9 @@ function ClientsPage() {
         return <MainContainer contents={contents} />
     }
 
-    const contents = <>
+    const results = query ? clients.filter(my_filter) : clients
+
+    const contents =
         <VStack>
             <Flex w="100%" alignItems='center' justifyContent="space-between">
                 <Flex>
@@ -41,19 +52,18 @@ function ClientsPage() {
                 <Flex>
                     <InputGroup>
                         <InputLeftElement pointerEvents='none' children={<FiSearch />} />
-                        <Input placeholder='Search' />
+                        <Input value={query} onChange={onQueryStringChange} placeholder='Search' />
                     </InputGroup>
                 </Flex>
             </Flex>
 
             <Flex w="100%" alignItems='center'>
-                <ClientTable clients={data} />
+                <ClientTable clients={results} />
             </Flex>
-
 
             <Flex w="100%" alignItems='center' justifyContent="space-between">
                 <Flex>
-                    <Text>Showing results {1} to {10} of {100}</Text>
+                    <Text>Showing results {1} to {clients.length} of {clients.length}</Text>
                 </Flex>
 
                 <Flex>
@@ -62,7 +72,6 @@ function ClientsPage() {
                 </Flex>
             </Flex>
         </VStack>
-    </>
 
     return <MainContainer contents={contents} />
 }
