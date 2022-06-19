@@ -9,7 +9,7 @@ function ClientsPage() {
     // Search query string.
     const [query, setQuery] = useState('')
     const onQueryStringChange = (event) => setQuery(event.target.value)
-    const my_filter = (client) => {
+    const queryFilter = (client) => {
         return client.name.toLowerCase().includes(query) ||
             client.lastname.toLowerCase().includes(query)
     }
@@ -39,7 +39,7 @@ function ClientsPage() {
         return <MainContainer contents={contents} />
     }
 
-    const results = query ? clients.filter(my_filter) : clients
+    const results = query ? clients.filter(queryFilter) : clients
 
     const contents =
         <VStack>
