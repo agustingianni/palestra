@@ -63,7 +63,7 @@ function ClientsPage() {
 
             <Flex w="100%" alignItems='center' justifyContent="space-between">
                 <Flex>
-                    <Text>Showing results {1} to {clients.length} of {clients.length}</Text>
+                    <Text>Showing page {1} of {Math.ceil(clients.length / 10)}</Text>
                 </Flex>
 
                 <Flex>
