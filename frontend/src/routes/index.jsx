@@ -5,6 +5,7 @@ import LoginPage from './login'
 import LogoutPage from './logout'
 import SettingsPage from './settings'
 import NotFound from './notfound'
+import PaymentsPage from './payments'
 
 const AppRoutes = [
     {
@@ -35,6 +36,11 @@ const AppRoutes = [
     {
         path: '/settings',
         element: <SettingsPage />,
+        isPrivate: true,
+    },
+    {
+        path: '/payments',
+        element: <PaymentsPage />,
         isPrivate: true,
     },
     {

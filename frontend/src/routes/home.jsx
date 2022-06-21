@@ -10,7 +10,7 @@ function HomePage() {
         <h1>Contents</h1>
     </>
 
-    return <MainContainer contents={contents} />
+    return <MainContainer>{contents}</MainContainer>
 }
 
 export default HomePage

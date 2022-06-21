@@ -6,7 +6,8 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button
+    Button,
+    Heading, Text
 } from '@chakra-ui/react'
 
 import ClientTypeBadge from './ClientTypeBadge'
@@ -18,7 +19,7 @@ function ClientViewModal({ client, isOpen, onClose }) {
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Client View</ModalHeader>
+                <ModalHeader>Information</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <ClientCard client={client} />

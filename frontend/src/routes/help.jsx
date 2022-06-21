@@ -10,7 +10,7 @@ function HelpPage() {
         <Text fontSize="xl">For assistance email agustingianni@gmail.com or call +39 333 391 2403</Text>
     </>
 
-    return <MainContainer contents={contents} />
+    return <MainContainer>{contents}</MainContainer>
 }
 
 export default HelpPage

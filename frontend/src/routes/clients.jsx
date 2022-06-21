@@ -48,26 +48,24 @@ function ClientsPage() {
     // Client data.
     const { isLoading, isError, data: clients, error } = useClientQuery()
     if (isLoading) {
-        const contents = (
+        const contents =
             <Container>
                 <Text>Loading clients ...</Text>
                 <Progress isIndeterminate />
             </Container>
-        )
 
-        return <MainContainer contents={contents} />
+        return <MainContainer>{contents}</MainContainer>
     }
 
     if (isError) {
-        const contents = (
+        const contents =
             <Alert status='error'>
                 <AlertIcon />
                 <AlertTitle>Could not get clients!</AlertTitle>
                 <AlertDescription>{error.message}</AlertDescription>
             </Alert>
-        )
 
-        return <MainContainer contents={contents} />
+        return <MainContainer>{contents}</MainContainer>
     }
 
     const results = query ? clients.filter(queryFilter) : clients
@@ -139,9 +137,7 @@ function ClientsPage() {
             client={currentClient}
         />
 
-        <MainContainer
-            contents={contents}
-        />
+        <MainContainer>{contents}</MainContainer>
     </>
 }
 
