@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FiEdit } from 'react-icons/fi'
 import { HStack, Button, TableContainer, Table, Tr, Td, Th, Thead, Tbody } from '@chakra-ui/react'
 
-import ClientCreateModal from './ClientCreateModal'
 import ClientViewModal from './ClientViewModal'
 import ClientEditModal from './ClientEditModal'
 

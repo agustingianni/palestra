@@ -1,11 +1,15 @@
 import { useState } from 'react'
-import { Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, Input, Button } from '@chakra-ui/react';
-import { FiSearch } from 'react-icons/fi'
+import { useDisclosure, Flex, InputGroup, InputLeftElement, Container, Alert, AlertIcon, AlertTitle, AlertDescription, Progress, Text, Heading, VStack, Input, Button } from '@chakra-ui/react';
+import { FiSearch, FiPlusCircle } from 'react-icons/fi'
+import { useClientQuery } from '../hooks/clients'
 import ClientTable from '../components/ClientTable'
 import MainContainer from '../components/MainContainer'
-import { useClientQuery } from '../hooks/clients'
+import ClientCreateModal from '../components/ClientCreateModal'
 
 function ClientsPage() {
+    // Client create modal operations.
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     // Search query string.
     const [query, setQuery] = useState('')
     const onQueryStringChange = (event) => setQuery(event.target.value)
@@ -50,6 +54,8 @@ function ClientsPage() {
                     </Heading>
                 </Flex>
                 <Flex>
+                    <Button onClick={onOpen} leftIcon={<FiPlusCircle />}>New</Button>
+
                     <InputGroup>
                         <InputLeftElement pointerEvents='none' children={<FiSearch />} />
                         <Input value={query} onChange={onQueryStringChange} placeholder='Search' />
@@ -73,7 +79,10 @@ function ClientsPage() {
             </Flex>
         </VStack>
 
-    return <MainContainer contents={contents} />
+    return <>
+        <ClientCreateModal isOpen={isOpen} onClose={onClose} />
+        <MainContainer contents={contents} />
+    </>
 }
 
 export default ClientsPage
