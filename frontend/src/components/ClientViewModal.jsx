@@ -6,33 +6,33 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button,
-    useDisclosure
+    Button
 } from '@chakra-ui/react'
 
-function ClientViewModal({ client }) {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+import ClientTypeBadge from './ClientTypeBadge'
+import ClientCard from './ClientCard'
+import ClientStatusBadge from './ClientStatusBadge'
+
+function ClientViewModal({ client, isOpen, onClose }) {
     return (
-        <>
-            <Button onClick={onOpen}>Open View Modal</Button>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Client View</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <ClientCard client={client} />
+                    <ClientStatusBadge client={client} />
+                    <ClientTypeBadge client={client} />
+                </ModalBody>
 
-            <Modal isOpen={isOpen} onClose={onClose} isCentered>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Add Client</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <h1>client view modal</h1>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
+                <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        Close
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     )
 }
 

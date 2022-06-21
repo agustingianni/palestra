@@ -5,10 +5,37 @@ import { useClientQuery } from '../hooks/clients'
 import ClientTable from '../components/ClientTable'
 import MainContainer from '../components/MainContainer'
 import ClientCreateModal from '../components/ClientCreateModal'
+import ClientViewModal from '../components/ClientViewModal'
+import ClientEditModal from '../components/ClientEditModal'
 
 function ClientsPage() {
-    // Client create modal operations.
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [currentClient, setCurrentClient] = useState(null)
+
+    // Client modals.
+    const createClientModal = useDisclosure()
+    const viewClientModal = useDisclosure()
+    const editClientModal = useDisclosure()
+
+    const onClientEvent = (event, client) => {
+        switch (event) {
+            case "create":
+                createClientModal.onOpen()
+                break
+
+            case "view":
+                setCurrentClient(client)
+                viewClientModal.onOpen()
+                break
+
+            case "edit":
+                setCurrentClient(client)
+                editClientModal.onOpen()
+                break
+
+            default:
+                throw new Error("Unknown client event")
+        }
+    }
 
     // Search query string.
     const [query, setQuery] = useState('')
@@ -54,17 +81,32 @@ function ClientsPage() {
                     </Heading>
                 </Flex>
                 <Flex>
-                    <Button onClick={onOpen} leftIcon={<FiPlusCircle />}>New</Button>
+                    <Button
+                        onClick={() => onClientEvent("create")}
+                        leftIcon={<FiPlusCircle />}>
+                        New
+                    </Button>
 
                     <InputGroup>
-                        <InputLeftElement pointerEvents='none' children={<FiSearch />} />
-                        <Input value={query} onChange={onQueryStringChange} placeholder='Search' />
+                        <InputLeftElement
+                            pointerEvents='none'
+                            children={<FiSearch />}
+                        />
+
+                        <Input
+                            value={query}
+                            onChange={onQueryStringChange}
+                            placeholder='Search'
+                        />
                     </InputGroup>
                 </Flex>
             </Flex>
 
             <Flex w="100%" alignItems='center'>
-                <ClientTable clients={results} />
+                <ClientTable
+                    clients={results}
+                    onClientEvent={onClientEvent}
+                />
             </Flex>
 
             <Flex w="100%" alignItems='center' justifyContent="space-between">
@@ -80,8 +122,26 @@ function ClientsPage() {
         </VStack>
 
     return <>
-        <ClientCreateModal isOpen={isOpen} onClose={onClose} />
-        <MainContainer contents={contents} />
+        <ClientCreateModal
+            isOpen={createClientModal.isOpen}
+            onClose={createClientModal.onClose}
+        />
+
+        <ClientViewModal
+            isOpen={viewClientModal.isOpen}
+            onClose={viewClientModal.onClose}
+            client={currentClient}
+        />
+
+        <ClientEditModal
+            isOpen={editClientModal.isOpen}
+            onClose={editClientModal.onClose}
+            client={currentClient}
+        />
+
+        <MainContainer
+            contents={contents}
+        />
     </>
 }
 

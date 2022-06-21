@@ -16,7 +16,7 @@ function ClientCreateModal({ isOpen, onClose }) {
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Add Client</ModalHeader>
+                <ModalHeader>Client Create</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <ClientCreateForm />

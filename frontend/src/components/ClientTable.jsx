@@ -1,24 +1,13 @@
-import { useState } from 'react';
-import { FiEdit } from 'react-icons/fi'
-import { HStack, Button, TableContainer, Table, Tr, Td, Th, Thead, Tbody } from '@chakra-ui/react'
-
-import ClientViewModal from './ClientViewModal'
-import ClientEditModal from './ClientEditModal'
-
+import { FiEye, FiEdit } from 'react-icons/fi'
+import { Button, TableContainer, Table, Tr, Td, Th, Thead, Tbody } from '@chakra-ui/react'
 
 import ClientTypeBadge from './ClientTypeBadge'
 import ClientCard from './ClientCard'
 import ClientStatusBadge from './ClientStatusBadge'
 
-function ClientTable({ clients }) {
-    const [selectedClient, setSelectedClient] = useState(null)
-
-    const onClientViewClicked = (client) => {
-        setSelectedClient(client)
-    }
-
+function ClientTable({ clients, onClientEvent }) {
     const rows = clients.map((client) =>
-        <Tr key={client._id} onClick={() => { onClientViewClicked(client) }}>
+        <Tr key={client._id}>
             <Td>
                 <ClientCard client={client} />
             </Td>
@@ -32,35 +21,37 @@ function ClientTable({ clients }) {
             </Td>
 
             <Td>
-                <Button leftIcon={<FiEdit />} variant='ghost' />
+                <Button
+                    onClick={() => { onClientEvent("view", client) }}
+                    leftIcon={<FiEye />}
+                    variant='ghost'
+                />
+
+                <Button
+                    onClick={() => { onClientEvent("edit", client) }}
+                    leftIcon={<FiEdit />}
+                    variant='ghost'
+                />
             </Td>
         </Tr>
     )
 
     return (
-        <>
-            <HStack>
-                <ClientViewModal client={selectedClient} />
-                <ClientEditModal client={selectedClient} />
-                <ClientCreateModal />
-            </HStack>
-
-            <TableContainer width={"100%"}>
-                <Table size='md'>
-                    <Thead>
-                        <Tr>
-                            <Th>Name</Th>
-                            <Th>Status</Th>
-                            <Th>Role</Th>
-                            <Th>Edit</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {rows}
-                    </Tbody>
-                </Table>
-            </TableContainer>
-        </>
+        <TableContainer width={"100%"}>
+            <Table size='md'>
+                <Thead>
+                    <Tr>
+                        <Th>Name</Th>
+                        <Th>Status</Th>
+                        <Th>Role</Th>
+                        <Th>Actions</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {rows}
+                </Tbody>
+            </Table>
+        </TableContainer>
     )
 }
 
